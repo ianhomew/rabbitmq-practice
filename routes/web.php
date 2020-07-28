@@ -18,4 +18,5 @@ Route::get('/', function () {
 });
 
 
-Route::get('/rbmq', 'TestController@index');
+Route::get('/rbmq', 'SimpleRabbitMQController@index');
+Route::get('/sendEmail', 'SimpleRabbitMQController@useQueueManager');
