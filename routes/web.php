@@ -20,3 +20,10 @@ Route::get('/', function () {
 
 Route::get('/rbmq', 'SimpleRabbitMQController@index');
 Route::get('/sendEmail', 'SimpleRabbitMQController@useQueueManager');
+
+
+Route::get('/producerSimple', 'SimpleRabbitMQController@producerSimple');
+Route::get('/consumerSimple', 'SimpleRabbitMQController@consumerSimple');
+
+Route::get('/producer', 'SimpleRabbitMQController@producer');
+Route::get('/consumer', 'SimpleRabbitMQController@consumer');

@@ -132,6 +132,48 @@ return [
             'worker' => env('RABBITMQ_WORKER', 'default'),
 
         ],
+        'rabbitmqProducerAndConsumer' => [
+
+            'driver' => 'rabbitmq',
+            'queue' => 'producerAndConsumer',
+            'connection' => PhpAmqpLib\Connection\AMQPLazyConnection::class,
+
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', '127.0.0.1'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'guest'),
+                    'password' => env('RABBITMQ_PASSWORD', 'guest'),
+                    'vhost' => env('RABBITMQ_VHOST', '/'),
+                ],
+            ],
+
+            'options' => [
+                'queue' => [
+                    // ...
+//
+//                    'exchange' => 'application-x',
+//                    'exchange_type' => 'direct',
+//                    'exchange_routing_key' => '',
+
+//                    'exchange' => 'application-x', // amq.direct
+                    'exchange_type' => 'direct',
+                    'exchange_routing_key' => '',
+                ],
+            ],
+
+            /*
+             * Determine the number of seconds to sleep if there's an error communicating with rabbitmq
+             * If set to false, it'll throw an exception rather than doing the sleep for X seconds.
+             */
+            'sleep_on_error' => env('RABBITMQ_ERROR_SLEEP', 5),
+
+            /*
+             * Set to "horizon" if you wish to use Laravel Horizon.
+             */
+            'worker' => env('RABBITMQ_WORKER', 'default'),
+
+        ],
 
     ],
 

@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProducerConsumerQueue;
 use App\Jobs\RabbitTestQueue;
 use App\Jobs\SendEmailQueue;
 use Illuminate\Http\Request;
 use Illuminate\Queue\QueueManager;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Queue;
 
 class SimpleRabbitMQController extends Controller
 {
     /**
      * For queue test
-     * Command: php artisan rabbitmq:consume
-     * 如果開兩個 php artisan rabbitmq:consume 可以更快
+     * Command:
+     * 1. php artisan rabbitmq:consume
+     *    如果開兩個 php artisan rabbitmq:consume 可以更快
+     * 2. php artisan queue:work
      *
      * @param QueueManager $queueManager
      * @return \Illuminate\Http\JsonResponse
@@ -36,7 +40,9 @@ class SimpleRabbitMQController extends Controller
     }
 
     /**
-     * Command: php artisan rabbitmq:consume --queue=sendEmailQueue
+     * Command:
+     * 1. php artisan rabbitmq:consume --queue=sendEmailQueue
+     * 2. php artisan queue:work --queue=sendEmailQueue
      *
      * @param QueueManager $queueManager
      * @return \Illuminate\Http\JsonResponse
@@ -54,5 +60,77 @@ class SimpleRabbitMQController extends Controller
         }
 
         return response()->json(['code' => 0, 'msg' => "success", 'res' => $res]);
+    }
+
+    /**
+     * rabbitmq 發布訂閱
+     * 單純的傳文字
+     *
+     * @param QueueManager $queueManager
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function producerSimple(QueueManager $queueManager)
+    {
+        $queueManager->setDefaultDriver('rabbitmqProducerAndConsumer');
+
+        $faker = Faker::create();
+        $text = $faker->userName;
+        $queueManager->pushRaw($text);
+
+        return response()->json(['code' => 0, 'msg' => "success", 'res' => $text]);
+    }
+
+    /**
+     * rabbitmq 發布訂閱
+     *
+     * @param QueueManager $queueManager
+     */
+    public function consumerSimple(QueueManager $queueManager)
+    {
+        $queueManager->setDefaultDriver('rabbitmqProducerAndConsumer');
+        $consumer = $queueManager->pop();
+        $data = $consumer->getRawBody();
+        $consumer->delete();
+        dd($data);
+    }
+
+
+    /**
+     * rabbitmq 發布訂閱
+     * 也可以傳整個物件進去 但是要先做 serialize
+     *
+     * @param QueueManager $queueManager
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function producer(QueueManager $queueManager)
+    {
+        $queueManager->setDefaultDriver('rabbitmqProducerAndConsumer');
+
+        $faker = Faker::create();
+        $text = $faker->userName;
+        $job = new ProducerConsumerQueue($text);
+        $queueManager->pushRaw(serialize($job));
+
+        return response()->json(['code' => 0, 'msg' => "success", 'res' => $text]);
+    }
+
+    /**
+     * rabbitmq 發布訂閱
+     *
+     * @param QueueManager $queueManager
+     */
+    public function consumer(QueueManager $queueManager)
+    {
+        $queueManager->setDefaultDriver('rabbitmqProducerAndConsumer');
+        $consumer = $queueManager->pop();
+        $data = $consumer->getRawBody();
+        $job = unserialize($data);
+
+        if ($job instanceof ProducerConsumerQueue) {
+            $job->handle();
+        }
+
+        $consumer->delete();
+        dd($job, $consumer);
     }
 }

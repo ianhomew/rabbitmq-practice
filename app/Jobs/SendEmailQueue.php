@@ -36,13 +36,13 @@ class SendEmailQueue implements ShouldQueue
      */
     public function handle()
     {
-        echo "$this->sendTo   /   $this->content " . PHP_EOL;
         sleep(1);
         SendEmailQueueModel::create([
             'send_to' => $this->sendTo,
             'content' => $this->content,
         ]);
 
+        echo PHP_EOL;
         echo json_encode(['code' => 200, 'msg' => "Send to: $this->sendTo, content: $this->content"], JSON_PRETTY_PRINT);
     }
 }

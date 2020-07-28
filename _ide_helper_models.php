@@ -12,6 +12,25 @@
 
 namespace App{
 /**
+ * App\ProducerConsumer
+ *
+ * @property int $id
+ * @property string $data
+ * @property string|null $created_at
+ * @property string|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer whereData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ProducerConsumer whereUpdatedAt($value)
+ */
+	class ProducerConsumer extends \Eloquent {}
+}
+
+namespace App{
+/**
  * App\User
  *
  * @property int $id
@@ -44,7 +63,7 @@ namespace App{
  * App\SendEmailQueue
  *
  * @property int $id
- * @property string $sent_to
+ * @property string $send_to
  * @property string $content
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -54,7 +73,7 @@ namespace App{
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SendEmailQueue whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SendEmailQueue whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SendEmailQueue whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\SendEmailQueue whereSentTo($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\SendEmailQueue whereSendTo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\SendEmailQueue whereUpdatedAt($value)
  */
 	class SendEmailQueue extends \Eloquent {}

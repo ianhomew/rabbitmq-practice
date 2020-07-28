@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.0",
         "php-amqplib/php-amqplib": "^2.11",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^10.2",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-amqp": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.7",

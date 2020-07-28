@@ -40,6 +40,7 @@ class RabbitTestQueue implements ShouldQueue
                 'description' => $this->data->description,
             ];
             $result = Posts::create($insert);
+            echo PHP_EOL;
             echo json_encode(['code' => 200, 'msg' => $result], JSON_PRETTY_PRINT);
         } catch (\Exception $exception) {
             echo json_encode(['code' => 0, 'msg' => $exception->getMessage()], JSON_PRETTY_PRINT);
