@@ -27,3 +27,11 @@ Route::get('/consumerSimple', 'SimpleRabbitMQController@consumerSimple');
 
 Route::get('/producer', 'SimpleRabbitMQController@producer');
 Route::get('/consumer', 'SimpleRabbitMQController@consumer');
+
+
+
+
+
+Route::get('/toLogstash', 'LogstashController@index');
+
+
