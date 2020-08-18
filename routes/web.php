@@ -27,3 +27,9 @@ Route::get('/consumerSimple', 'SimpleRabbitMQController@consumerSimple');
 
 Route::get('/producer', 'SimpleRabbitMQController@producer');
 Route::get('/consumer', 'SimpleRabbitMQController@consumer');
+
+
+Route::get('/closureWithNoArgs', 'ClosureController@index');
+Route::get('/closureWithUse', 'ClosureController@useUse');
+Route::get('/closureWithArg', 'ClosureController@useArg');
+
