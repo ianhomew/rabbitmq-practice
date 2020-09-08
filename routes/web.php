@@ -33,3 +33,15 @@ Route::get('/closureWithNoArgs', 'ClosureController@index');
 Route::get('/closureWithUse', 'ClosureController@useUse');
 Route::get('/closureWithArg', 'ClosureController@useArg');
 
+// laravel 5.8 可以自動幫你依賴注入
+Route::get('/ioc', 'IoCController@index');
+
+
+
+
+
+
+
+
+
+
